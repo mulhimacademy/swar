@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>عرض السوبر أكاديمي (حضوري) - الصف الثاني عشر | أكاديمية ملهم</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+  <style>
+    :root{
+      --primary:#6a2df3;
+      --primary-dark:#4b1fad;
+      --primary-light:#8a5cf5;
+      --secondary:#ff8a3c;
+      --accent:#22b8aa;
+      --success:#10b981;
+      --warning:#f59e0b;
+      --danger:#ef4444;
+
+      --grad:linear-gradient(135deg,#6a2df3,#8a5cf5);
+      --grad2:linear-gradient(135deg,#ff8a3c,#ffb37c);
+      --bg:linear-gradient(135deg,#f7f4ff,#ffffff);
+
+      --text:#15162b;
+      --muted:#5d6680;
+
+      --r-lg:20px;
+      --r-md:12px;
+
+      --shadow1:0 10px 25px rgba(106,45,243,.10);
+      --shadow2:0 15px 35px rgba(106,45,243,.16);
+
+      --t:all .25s ease;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{
+      font-family:'Cairo',sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      min-height:100vh;
+      padding:18px;
+    }
+    .container{max-width:1050px;margin:0 auto;padding:12px}
+    .header{text-align:center;margin:10px 0 26px}
+    .logo-wrap{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
+    .logo-img{
+      width:84px;height:84px;border-radius:50%;
+      background:#fff;border:3px solid var(--primary-light);
+      box-shadow:var(--shadow1);overflow:hidden;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .logo-img img{width:100%;height:100%;object-fit:cover}
+    .logo-text{text-align:right}
+    .logo-text h1{
+      font-size:2rem;font-weight:900;
+      background:var(--grad);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+    .logo-text p{color:var(--muted);font-weight:800}
+    .badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+    .badge{
+      padding:9px 16px;border-radius:999px;color:#fff;font-weight:900;
+      display:inline-flex;align-items:center;gap:8px;
+      box-shadow:0 10px 22px rgba(0,0,0,.08);font-size:.95rem;
+    }
+    .badge.purple{background:var(--grad)}
+    .badge.orange{background:var(--grad2)}
+    .badge.dark{background:#111827}
+
+    .card{
+      background:#fff;border-radius:var(--r-lg);padding:26px;
+      box-shadow:var(--shadow2);border:1px solid rgba(106,45,243,.10);
+    }
+
+    .progress-steps{
+      display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;
+      margin:18px 0 18px;position:relative;
+    }
+    .progress-steps::before{
+      content:'';position:absolute;top:16px;left:0;right:0;height:3px;
+      background:#e5e7eb;border-radius:999px;z-index:1;
+    }
+    .progress-bar{
+      position:absolute;top:16px;right:0;height:3px;background:var(--primary);
+      border-radius:999px;z-index:2;width:0%;transition:var(--t);
+    }
+    .step{width:120px;text-align:center;position:relative;z-index:3}
+    .step-icon{
+      width:36px;height:36px;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      margin:0 auto 8px;background:#e5e7eb;color:var(--muted);
+      font-weight:900;transition:var(--t);
+    }
+    .step-label{font-size:.86rem;color:var(--muted);font-weight:900}
+    .step.active .step-icon{background:var(--primary);color:#fff;box-shadow:0 10px 22px rgba(106,45,243,.25)}
+    .step.active .step-label{color:var(--primary)}
+    .step.completed .step-icon{background:var(--success);color:#fff}
+
+    .form-step{display:none;animation:fade .35s ease}
+    .form-step.active{display:block}
+    @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+    .form-header{margin-bottom:18px}
+    .form-header h2{font-size:1.5rem;color:var(--primary-dark);margin-bottom:6px}
+    .form-header p{color:var(--muted);font-weight:800}
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      gap:14px;margin-top:12px;
+    }
+    label{display:block;margin:0 0 8px;font-weight:900;color:var(--text)}
+    .required::after{content:" *";color:var(--danger)}
+    input,select,textarea{
+      width:100%;padding:12px 14px;border:2px solid #e5e7eb;
+      border-radius:var(--r-md);font-family:'Cairo',sans-serif;font-size:1rem;
+      outline:none;transition:var(--t);
+    }
+    input:focus,select:focus,textarea:focus{
+      border-color:var(--primary);
+      box-shadow:0 0 0 3px rgba(106,45,243,.10);
+    }
+    .hint{color:var(--muted);font-weight:800;font-size:.88rem;margin-top:6px}
+    .error{color:var(--danger);font-weight:900;font-size:.85rem;margin-top:6px;display:none}
+
+    .classes-wrap{margin-top:10px}
+    .class-item{
+      border:2px solid #e5e7eb;border-radius:var(--r-lg);
+      padding:16px;background:#fff;cursor:pointer;transition:var(--t);
+      margin:14px 0;position:relative;overflow:hidden;
+    }
+    .class-item:hover{border-color:var(--primary);transform:translateY(-2px);box-shadow:var(--shadow1)}
+    .class-item.selected{border-color:var(--primary);background:rgba(106,45,243,.03)}
+    .class-head{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+
+    .teacher-img{
+      width:82px;height:82px;border-radius:50%;
+      border:3px solid rgba(106,45,243,.25);
+      object-fit:cover;background:#fff;flex:0 0 auto;
+      cursor:zoom-in;
+    }
+    .class-title{font-size:1.1rem;font-weight:900;color:var(--primary-dark)}
+    .class-sub{color:var(--muted);font-weight:900;margin-top:2px}
+    .meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;color:var(--muted);font-weight:900}
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 12px;border-radius:999px;font-weight:900;font-size:.9rem;
+    }
+    .pill.price{background:rgba(16,185,129,.12);color:#047857}
+    .pill.mode{background:rgba(34,184,170,.14);color:#0f766e}
+    .pill.seats{background:rgba(239,68,68,.12);color:#991b1b}
+    .pill.closed{background:#111827;color:#fff}
+
+    .summary{
+      background:#f7f4ff;border-radius:var(--r-md);
+      padding:16px;margin-top:16px;border:1px solid rgba(106,45,243,.10);
+    }
+    .sum-row{
+      display:flex;justify-content:space-between;gap:10px;
+      padding:8px 0;border-bottom:1px solid rgba(0,0,0,.06);
+      font-weight:900;
+    }
+    .sum-row:last-child{border-bottom:none;color:var(--primary);font-weight:900}
+    .sum-row span:last-child{direction:ltr}
+
+    .btns{display:flex;justify-content:space-between;gap:12px;margin-top:18px;flex-wrap:wrap}
+    .btn{
+      border:none;border-radius:var(--r-md);
+      padding:12px 18px;font-family:'Cairo',sans-serif;font-weight:900;
+      cursor:pointer;transition:var(--t);
+      display:inline-flex;align-items:center;gap:10px;
+    }
+    .btn.primary{background:var(--grad);color:#fff;box-shadow:var(--shadow1)}
+    .btn.primary:hover{transform:translateY(-2px);box-shadow:var(--shadow2)}
+    .btn.secondary{background:transparent;color:var(--primary);border:2px solid var(--primary)}
+    .btn.secondary:hover{background:rgba(106,45,243,.06)}
+    .btn.success{background:var(--success);color:#fff}
+    .btn.success:hover{transform:translateY(-2px)}
+    .btn.disabled{background:#e5e7eb;color:#9ca3af;cursor:not-allowed}
+    .btn.disabled:hover{transform:none}
+
+    .message{
+      display:none;margin:14px 0;padding:14px;border-radius:var(--r-md);
+      font-weight:900;
+    }
+    .message.success{display:block;background:rgba(16,185,129,.10);border:1px solid rgba(16,185,129,.25);color:#047857}
+    .message.error{display:block;background:rgba(239,68,68,.10);border:1px solid rgba(239,68,68,.25);color:#991b1b}
+    .message.info{display:block;background:rgba(106,45,243,.10);border:1px solid rgba(106,45,243,.20);color:var(--primary-dark)}
+
+    .upload{
+      border:3px dashed #e5e7eb;border-radius:var(--r-lg);
+      padding:20px;text-align:center;cursor:pointer;transition:var(--t);margin-top:10px;
+    }
+    .upload:hover{border-color:var(--primary);background:rgba(106,45,243,.03)}
+    .upload i{font-size:2.2rem;color:var(--primary)}
+    .file-preview{
+      display:flex;align-items:center;justify-content:space-between;
+      margin-top:12px;background:rgba(106,45,243,.06);
+      border-radius:var(--r-md);padding:12px;font-weight:900;
+    }
+    .file-preview button{border:none;background:transparent;color:var(--danger);font-size:1.2rem;cursor:pointer}
+
+    .loader{display:none;text-align:center;padding:14px;margin-top:10px;font-weight:900;color:var(--primary)}
+    .spinner{
+      width:44px;height:44px;border-radius:50%;
+      border:3px solid #e5e7eb;border-top:3px solid var(--primary);
+      animation:spin 1s linear infinite;margin:0 auto 10px;
+    }
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    .terms{
+      background:rgba(106,45,243,.06);
+      border-radius:var(--r-md);
+      padding:14px;margin-top:14px;font-weight:900;color:var(--muted);
+    }
+    .terms li{margin:8px 0;list-style:none}
+    .terms i{color:var(--accent);margin-left:8px}
+
+    .footer{text-align:center;margin-top:22px;color:var(--muted);font-weight:900;font-size:.92rem}
+    .contact{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:10px}
+    .contact .chip{background:rgba(106,45,243,.06);border-radius:999px;padding:10px 14px;display:flex;align-items:center;gap:8px}
+    .contact i{color:var(--primary)}
+
+    .modal{
+      position:fixed;inset:0;background:rgba(0,0,0,.65);
+      display:none;align-items:center;justify-content:center;
+      padding:18px;z-index:9999;
+    }
+    .modal.show{display:flex}
+    .modal-card{
+      background:#fff;border-radius:18px;max-width:720px;width:100%;
+      box-shadow:0 25px 60px rgba(0,0,0,.35);
+      overflow:hidden;
+    }
+    .modal-top{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:12px 14px;border-bottom:1px solid rgba(0,0,0,.06);
+      font-weight:900;
+    }
+    .modal-top button{
+      border:none;background:transparent;cursor:pointer;
+      font-size:1.2rem;color:#111827;
+    }
+    .modal-img{width:100%;max-height:70vh;object-fit:contain;background:#0b0c14}
+
+    @media (max-width:768px){
+      .card{padding:18px}
+      .step{width:100px}
+      .btn{width:100%;justify-content:center}
+      .btns{flex-direction:column}
+      .class-head{align-items:flex-start}
+    }
+  </style>
+</head>
+
+<body>
+<div class="container">
+
+  <div class="header">
+    <div class="logo-wrap">
+      <div class="logo-img">
+        <img src="https://h.top4top.io/p_3622ov2011.png" alt="شعار أكاديمية ملهم">
+      </div>
+      <div class="logo-text">
+        <h1>أكاديمية ملهم التعليمية</h1>
+        <p>عرض السوبر أكاديمي (حضوري) – السبت 13 ديسمبر – الصف الثاني عشر</p>
+      </div>
+    </div>
+
+    <div class="badges">
+      <div class="badge purple"><i class="fa-solid fa-bolt"></i> ريالين فقط للحصة</div>
+      <div class="badge orange"><i class="fa-solid fa-chair"></i> 10 مقاعد لكل مادة</div>
+      <div class="badge dark"><i class="fa-solid fa-location-dot"></i> التعليم: حضوري</div>
+    </div>
+  </div>
+
+  <div class="progress-steps">
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="step active" data-step="1">
+      <div class="step-icon">1</div>
+      <div class="step-label">اختيار الحصص</div>
+    </div>
+    <div class="step" data-step="2">
+      <div class="step-icon">2</div>
+      <div class="step-label">بيانات الطالب</div>
+    </div>
+    <div class="step" data-step="3">
+      <div class="step-icon">3</div>
+      <div class="step-label">التحويل + الإيصال</div>
+    </div>
+    <div class="step" data-step="4">
+      <div class="step-icon">4</div>
+      <div class="step-label">تأكيد الإرسال</div>
+    </div>
+  </div>
+
+  <div id="msgBox" class="message info" style="display:none"></div>
+
+  <div class="card">
+
+    <!-- STEP 1 -->
+    <div class="form-step active" id="step1">
+      <div class="form-header">
+        <h2>اختيار الحصص أولاً</h2>
+        <p>اختر حصة واحدة أو حصتين. (اضغط على صورة المعلم لتكبيرها)</p>
+      </div>
+
+      <div class="classes-wrap" id="classesWrap"></div>
+
+      <div class="summary">
+        <div class="sum-row"><span>عدد الحصص المختارة</span><span id="sumCount">0</span></div>
+        <div class="sum-row"><span>سعر الحصة</span><span id="sumPrice">2 ريال</span></div>
+        <div class="sum-row"><span>المبلغ النهائي</span><span id="sumFinal">0 ريال</span></div>
+      </div>
+
+      <div class="btns">
+        <button class="btn secondary disabled" disabled>السابق</button>
+        <button class="btn primary" onclick="nextStep()">
+          التالي <i class="fa-solid fa-arrow-left"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="form-step" id="step2">
+      <div class="form-header">
+        <h2>بيانات الطالب</h2>
+        <p>الآن أكمل معلوماتك… ثم ننتقل لرفع الإيصال.</p>
+      </div>
+
+      <div class="grid">
+        <div>
+          <label class="required" for="studentName">اسم الطالب كاملاً</label>
+          <input id="studentName" type="text" placeholder="الاسم الثلاثي والقبيلة">
+          <div class="error" id="errName">مطلوب</div>
+        </div>
+
+        <div>
+          <label class="required" for="grade">الصف الدراسي</label>
+          <select id="grade">
+            <option value="">اختر الصف</option>
+            <option value="الثاني عشر">الثاني عشر</option>
+          </select>
+          <div class="error" id="errGrade">مطلوب</div>
+        </div>
+
+        <div>
+          <label class="required" for="phone">رقم الهاتف (واتساب)</label>
+          <input id="phone" type="tel" placeholder="مثال: 95xxxxxx">
+          <div class="error" id="errPhone">رقم غير صحيح</div>
+        </div>
+
+        <div>
+          <label for="email">البريد الإلكتروني (اختياري)</label>
+          <input id="email" type="email" placeholder="example@email.com">
+        </div>
+      </div>
+
+      <div style="margin-top:12px">
+        <label for="notes">ملاحظات (اختياري)</label>
+        <textarea id="notes" rows="3" placeholder="أي ملاحظة خاصة..."></textarea>
+      </div>
+
+      <div class="btns">
+        <button class="btn secondary" onclick="prevStep()">
+          <i class="fa-solid fa-arrow-right"></i> السابق
+        </button>
+        <button class="btn primary" onclick="nextStep()">
+          التالي <i class="fa-solid fa-arrow-left"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="form-step" id="step3">
+      <div class="form-header">
+        <h2>التحويل المالي + رفع الإيصال</h2>
+        <p>حوّل المبلغ ثم ارفع صورة/ملف إشعار التحويل.</p>
+      </div>
+
+      <div class="summary" style="background:rgba(34,184,170,.10);border:1px solid rgba(34,184,170,.25)">
+        <div class="sum-row" style="border-bottom:none">
+          <span><i class="fa-solid fa-money-bill-wave"></i> رقم التحويل</span>
+          <span style="font-size:1.2rem;font-weight:900">92147179</span>
+        </div>
+        <div class="hint" style="margin-top:8px">
+          بعد رفع الإيصال سيتم تأكيد تسجيلك عبر الواتساب.
+        </div>
+      </div>
+
+      <div>
+        <label class="required">رفع إشعار التحويل</label>
+        <div class="upload" onclick="document.getElementById('receiptFile').click()">
+          <i class="fa-solid fa-cloud-arrow-up"></i>
+          <div style="margin-top:10px;font-weight:900">انقر لرفع صورة/ملف الإيصال</div>
+          <div class="hint">JPG, PNG, PDF (حد أقصى 5MB)</div>
+        </div>
+        <input id="receiptFile" type="file" accept="image/*,.pdf" style="display:none" onchange="handleFileUpload(this.files)">
+        <div class="error" id="errReceipt">مطلوب</div>
+
+        <div id="filePreview" style="display:none"></div>
+      </div>
+
+      <div class="btns">
+        <button class="btn secondary" onclick="prevStep()">
+          <i class="fa-solid fa-arrow-right"></i> السابق
+        </button>
+        <button class="btn primary" onclick="nextStep()">
+          التالي <i class="fa-solid fa-arrow-left"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="form-step" id="step4">
+      <div class="form-header">
+        <h2>تأكيد الإرسال</h2>
+        <p>راجع بياناتك ثم أرسل الطلب النهائي.</p>
+      </div>
+
+      <div id="resultBox" style="display:none"></div>
+
+      <div id="beforeSubmit">
+        <div class="summary">
+          <div class="sum-row"><span>اسم الطالب</span><span id="rName">-</span></div>
+          <div class="sum-row"><span>الهاتف</span><span id="rPhone">-</span></div>
+          <div class="sum-row"><span>الحصص</span><span id="rClasses">-</span></div>
+          <div class="sum-row"><span>المبلغ</span><span id="rFinal">-</span></div>
+        </div>
+
+        <div class="terms">
+          <ul>
+            <li><i class="fa-solid fa-circle-check"></i> المقاعد محدودة (10) لكل مادة — التسجيل ينغلق تلقائيًا عند الاكتمال.</li>
+            <li><i class="fa-solid fa-circle-check"></i> التسجيل يُعتمد بعد رفع الإيصال.</li>
+            <li><i class="fa-solid fa-circle-check"></i> للاستفسار: <b>74120010</b></li>
+          </ul>
+        </div>
+
+        <div style="margin-top:14px">
+          <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-weight:900">
+            <input type="checkbox" id="agreeTerms" style="width:auto">
+            أوافق على الشروط والأحكام
+          </label>
+          <div class="error" id="errTerms">مطلوب</div>
+        </div>
+
+        <div class="loader" id="loader">
+          <div class="spinner"></div>
+          جاري إرسال الطلب...
+        </div>
+
+        <div class="btns">
+          <button class="btn secondary" onclick="prevStep()">
+            <i class="fa-solid fa-arrow-right"></i> السابق
+          </button>
+          <button class="btn success" id="submitBtn" onclick="submitRegistration()">
+            <i class="fa-solid fa-paper-plane"></i> إرسال الطلب
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <div class="contact">
+      <div class="chip"><i class="fa-solid fa-phone"></i> للتواصل: 74120010</div>
+      <div class="chip"><i class="fa-solid fa-money-bill-wave"></i> رقم التحويل: 92147179</div>
+      <div class="chip"><i class="fa-solid fa-location-dot"></i> حضوري – السبت 13 ديسمبر</div>
+    </div>
+    <p style="margin-top:10px">© 2025 أكاديمية ملهم التعليمية</p>
+  </div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal" id="imgModal" onclick="closeModal(event)">
+  <div class="modal-card" onclick="event.stopPropagation()">
+    <div class="modal-top">
+      <div id="modalTitle">صورة المعلم</div>
+      <button onclick="closeModal(event)"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <img id="modalImg" class="modal-img" src="" alt="">
+  </div>
+</div>
+
+<script>
+  // ================== إعدادات ==================
+  const GOOGLE_SCRIPT_URL = 'ضع_هنا_رابط_السكربت_الخاص_بك'; // عدّله فقط
+  const PRICE_PER_CLASS = 2;
+  const MAX_SEATS = 10;
+
+  // ================== بيانات الحصص (حضوري - السبت 13 ديسمبر) ==================
+  const classesData = [
+    {
+      id: 'phy12',
+      subject: 'فيزياء',
+      teacher: 'بدر العبري',
+      image: 'https://h.top4top.io/p_3629jyv2s3.jpeg',
+      day: 'السبت 13 ديسمبر',
+      time: '11:00 – 12:30 ظهرًا',
+      stage: 'الصف الثاني عشر',
+      content: 'مراجعة شاملة للوحدة الثانية (المجالات الكهربائية وقانون كولوم)'
+    },
+    {
+      id: 'math12',
+      subject: 'الرياضيات المتقدمة',
+      teacher: 'خالد الكلباني',
+      image: 'https://j.top4top.io/p_3630olt6l1.jpeg',
+      day: 'السبت 13 ديسمبر',
+      time: '6:00 – 7:30 مساءً',
+      stage: 'الصف الثاني عشر',
+      content: 'مراجعة شاملة للوحدة الرابعة (التفاضل) + أسئلة اختيار من متعدد ومقالية'
+    }
+  ];
+
+  // ================== حالة النموذج ==================
+  let step = 1;
+  let selected = [];
+  let uploadedFile = null;
+  let student = {};
+
+  // مقاعد (واجهة فقط) — الإقفال الحقيقي الأفضل يكون من Apps Script
+  const seatsKey = 'mulhim_super_inperson_seats_v1';
+  const seatsState = loadSeats();
+
+  // ================== تهيئة ==================
+  document.addEventListener('DOMContentLoaded', () => {
+    renderClasses();
+    updateProgress();
+    updateSummaryNumbers();
+  });
+
+  function loadSeats(){
+    try{
+      const raw = localStorage.getItem(seatsKey);
+      if(raw){
+        const obj = JSON.parse(raw);
+        classesData.forEach(c => {
+          if(typeof obj[c.id] !== 'number') obj[c.id] = MAX_SEATS;
+        });
+        return obj;
+      }
+    }catch(e){}
+    const init = {};
+    classesData.forEach(c => init[c.id] = MAX_SEATS);
+    localStorage.setItem(seatsKey, JSON.stringify(init));
+    return init;
+  }
+  function saveSeats(){ localStorage.setItem(seatsKey, JSON.stringify(seatsState)); }
+
+  function setMsg(type, text){
+    const box = document.getElementById('msgBox');
+    box.className = 'message ' + type;
+    box.style.display = 'block';
+    box.textContent = text;
+    setTimeout(()=> box.style.display='none', 4500);
+  }
+
+  function showStep(n){
+    document.querySelectorAll('.form-step').forEach(el => el.classList.remove('active'));
+    document.getElementById('step'+n).classList.add('active');
+    step = n;
+    updateProgress();
+    if(step === 4) fillReview();
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  function updateProgress(){
+    const bar = document.getElementById('progressBar');
+    const percent = ((step - 1) / 3) * 100;
+    bar.style.width = percent + '%';
+
+    document.querySelectorAll('.step').forEach((el, idx) => {
+      const num = idx+1;
+      el.classList.remove('active','completed');
+      if(num < step) el.classList.add('completed');
+      else if(num === step) el.classList.add('active');
+    });
+  }
+
+  function nextStep(){
+    if(!validateStep(step)) return;
+    if(step === 2) saveStudent();
+    showStep(step+1);
+  }
+  function prevStep(){ showStep(step-1); }
+
+  function hideAllErrors(){ document.querySelectorAll('.error').forEach(e => e.style.display='none'); }
+  function showErr(id){ const el = document.getElementById(id); if(el) el.style.display='block'; }
+
+  function validateStep(s){
+    hideAllErrors();
+
+    if(s === 1){
+      if(selected.length === 0){
+        setMsg('error','اختر حصة واحدة على الأقل 👇');
+        return false;
+      }
+      const closed = selected.find(c => (seatsState[c.id] ?? MAX_SEATS) <= 0);
+      if(closed){
+        setMsg('error', `عذرًا، ${closed.subject} اكتملت مقاعده وتم الإغلاق.`);
+        return false;
+      }
+      return true;
+    }
+
+    if(s === 2){
+      const name = document.getElementById('studentName').value.trim();
+      const grade = document.getElementById('grade').value;
+      const phone = document.getElementById('phone').value.trim();
+
+      let ok = true;
+      if(!name){ showErr('errName'); ok=false; }
+      if(!grade){ showErr('errGrade'); ok=false; }
+      if(!phone || !/^\d{8,9}$/.test(phone)){ showErr('errPhone'); ok=false; }
+      return ok;
+    }
+
+    if(s === 3){
+      if(!uploadedFile){ showErr('errReceipt'); return false; }
+      return true;
+    }
+
+    if(s === 4){
+      if(!document.getElementById('agreeTerms').checked){ showErr('errTerms'); return false; }
+      return true;
+    }
+
+    return true;
+  }
+
+  function saveStudent(){
+    student = {
+      name: document.getElementById('studentName').value.trim(),
+      grade: document.getElementById('grade').value,
+      phone: document.getElementById('phone').value.trim(),
+      email: document.getElementById('email').value.trim(),
+      notes: document.getElementById('notes').value.trim(),
+    };
+  }
+
+  function renderClasses(){
+    const wrap = document.getElementById('classesWrap');
+    wrap.innerHTML = '';
+
+    classesData.forEach(cls => {
+      const seatsLeft = seatsState[cls.id] ?? MAX_SEATS;
+      const isClosed = seatsLeft <= 0;
+
+      const div = document.createElement('div');
+      div.className = 'class-item';
+      div.setAttribute('data-id', cls.id);
+
+      if(isClosed){
+        div.style.opacity = '0.55';
+        div.style.pointerEvents = 'none';
+      }
+
+      div.onclick = () => selectClass(cls.id);
+
+      div.innerHTML = `
+        <div class="class-head">
+          <img class="teacher-img" src="${cls.image}" alt="${cls.teacher}" onerror="this.src='https://via.placeholder.com/120?text=Teacher'" onclick="openModal('${cls.image}','${cls.teacher}')">
+          <div>
+            <div class="class-title">${cls.subject} – ${cls.stage}</div>
+            <div class="class-sub">👨‍🏫 ${cls.teacher}</div>
+            <div class="meta">
+              <span><i class="fa-regular fa-calendar"></i> ${cls.day}</span>
+              <span><i class="fa-regular fa-clock"></i> ${cls.time}</span>
+            </div>
+            <div class="hint" style="margin-top:8px">${cls.content}</div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+          <div class="pill mode"><i class="fa-solid fa-location-dot"></i> حضوري</div>
+          <div class="pill price"><i class="fa-solid fa-tag"></i> ${PRICE_PER_CLASS} ريال</div>
+          ${
+            isClosed
+              ? `<div class="pill closed"><i class="fa-solid fa-lock"></i> التسجيل مغلق</div>`
+              : `<div class="pill seats"><i class="fa-solid fa-chair"></i> المقاعد المتبقية: ${seatsLeft}</div>`
+          }
+        </div>
+      `;
+
+      wrap.appendChild(div);
+    });
+
+    selected.forEach(s => {
+      const el = document.querySelector(`.class-item[data-id="${s.id}"]`);
+      if(el) el.classList.add('selected');
+    });
+  }
+
+  function selectClass(id){
+    const cls = classesData.find(c => c.id === id);
+    if(!cls) return;
+
+    if((seatsState[id] ?? MAX_SEATS) <= 0){
+      setMsg('error','التسجيل مغلق لهذه المادة.');
+      return;
+    }
+
+    const idx = selected.findIndex(x => x.id === id);
+    const el = document.querySelector(`.class-item[data-id="${id}"]`);
+
+    if(idx === -1){
+      selected.push(cls);
+      el.classList.add('selected');
+    }else{
+      selected.splice(idx,1);
+      el.classList.remove('selected');
+    }
+
+    updateSummaryNumbers();
+  }
+
+  function updateSummaryNumbers(){
+    const count = selected.length;
+    const final = count * PRICE_PER_CLASS;
+    document.getElementById('sumCount').textContent = count;
+    document.getElementById('sumFinal').textContent = final + ' ريال';
+  }
+
+  function handleFileUpload(files){
+    if(!files || !files.length) return;
+    const file = files[0];
+
+    if(file.size > 5 * 1024 * 1024){
+      setMsg('error','الملف كبير جدًا (أقصى حد 5MB).');
+      return;
+    }
+    const okType = file.type.includes('image') || file.type === 'application/pdf';
+    if(!okType){
+      setMsg('error','نوع الملف غير مدعوم. اختر صورة أو PDF.');
+      return;
+    }
+
+    uploadedFile = file;
+    document.getElementById('errReceipt').style.display='none';
+
+    const preview = document.getElementById('filePreview');
+    preview.style.display = 'block';
+    preview.innerHTML = `
+      <div class="file-preview">
+        <div style="display:flex;gap:10px;align-items:center">
+          <i class="fa-solid ${file.type.includes('image') ? 'fa-file-image' : 'fa-file-pdf'}" style="color:var(--primary);font-size:1.4rem"></i>
+          <div>
+            <div>${file.name}</div>
+            <div class="hint">${(file.size/1024).toFixed(1)} KB</div>
+          </div>
+        </div>
+        <button onclick="removeFile()" title="حذف"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+    `;
+  }
+  function removeFile(){
+    uploadedFile = null;
+    document.getElementById('receiptFile').value = '';
+    document.getElementById('filePreview').style.display = 'none';
+  }
+
+  function fillReview(){
+    if(!student.name) saveStudent();
+
+    const details = selected.map(c => `${c.subject} (${c.teacher}) – ${c.day} ${c.time}`).join(' | ');
+    const final = selected.length * PRICE_PER_CLASS;
+
+    document.getElementById('rName').textContent = student.name || '-';
+    document.getElementById('rPhone').textContent = student.phone || '-';
+    document.getElementById('rClasses').textContent = details || '-';
+    document.getElementById('rFinal').textContent = final + ' ريال';
+  }
+
+  async function submitRegistration(){
+    if(!validateStep(4)) return;
+
+    if(!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.includes('ضع_هنا')){
+      setMsg('error','ضع رابط Google Script داخل الكود أولاً.');
+      return;
+    }
+
+    const btn = document.getElementById('submitBtn');
+    btn.classList.add('disabled');
+    btn.disabled = true;
+
+    document.getElementById('loader').style.display='block';
+
+    const count = selected.length;
+    const total = count * PRICE_PER_CLASS;
+
+    const classesNames = selected.map(c => c.subject).join('، ');
+    const classesDetails = selected.map(c => `${c.subject} - ${c.teacher} - ${c.day} ${c.time}`).join(' | ');
+
+    const payload = {
+      action: 'submit',
+      mode: 'حضوري',
+      date: 'السبت 13 ديسمبر',
+      offer: 'سوبر أكاديمي (2 ريال للحصة)',
+      name: student.name,
+      grade: student.grade,
+      phone: student.phone,
+      email: student.email,
+      classes: classesNames,
+      notes: student.notes,
+      count: String(count),
+      total: String(total),
+      discount: '0',
+      final: String(total),
+      file: uploadedFile ? uploadedFile.name : '',
+      extra: classesDetails
+    };
+
+    try{
+      const params = new URLSearchParams();
+      Object.keys(payload).forEach(k => params.append(k, payload[k]));
+
+      const res = await fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        headers: {'Content-Type':'application/x-www-form-urlencoded'},
+        body: params.toString()
+      });
+
+      const data = await res.json();
+
+      if(data.success){
+        selected.forEach(c => seatsState[c.id] = Math.max(0, (seatsState[c.id] ?? MAX_SEATS) - 1));
+        saveSeats();
+
+        showSuccess(data.ref || ('MUL-' + Date.now()));
+      }else{
+        setMsg('error','فشل الإرسال: ' + (data.message || ''));
+        btn.disabled = false;
+        btn.classList.remove('disabled');
+      }
+    }catch(err){
+      setMsg('error','خطأ في الإرسال: ' + err.message);
+      btn.disabled = false;
+      btn.classList.remove('disabled');
+    }finally{
+      document.getElementById('loader').style.display='none';
+    }
+  }
+
+  function showSuccess(refId){
+    document.getElementById('beforeSubmit').style.display='none';
+
+    const final = selected.length * PRICE_PER_CLASS;
+
+    const result = document.getElementById('resultBox');
+    result.style.display='block';
+    result.innerHTML = `
+      <div class="message success" style="display:block">
+        <i class="fa-solid fa-circle-check"></i> تم التسجيل بنجاح ✅
+      </div>
+
+      <div class="summary" style="background:#fff;border:2px dashed rgba(16,185,129,.45)">
+        <div class="sum-row"><span>رقم المرجع</span><span style="font-weight:900">${refId}</span></div>
+        <div class="sum-row"><span>الطالب</span><span>${student.name}</span></div>
+        <div class="sum-row"><span>الهاتف</span><span>${student.phone}</span></div>
+        <div class="sum-row"><span>عدد الحصص</span><span>${selected.length}</span></div>
+        <div class="sum-row"><span>المبلغ</span><span>${final} ريال</span></div>
+      </div>
+
+      <div class="btns">
+        <button class="btn primary" onclick="shareWhatsApp('${refId}')">
+          <i class="fa-brands fa-whatsapp"></i> مشاركة الملخص واتساب
+        </button>
+        <button class="btn secondary" onclick="copySummary('${refId}')">
+          <i class="fa-regular fa-copy"></i> نسخ الملخص
+        </button>
+        <button class="btn success" onclick="resetAll()">
+          <i class="fa-solid fa-plus"></i> تسجيل جديد
+        </button>
+      </div>
+
+      <div class="hint" style="margin-top:12px">
+        ✅ سيتم التواصل معك عبر الواتساب لتأكيد التسجيل. للاستفسار: 74120010
+      </div>
+    `;
+
+    renderClasses();
+  }
+
+  function buildSummaryText(refId){
+    const final = selected.length * PRICE_PER_CLASS;
+    const list = selected.map(c => `• ${c.subject} – ${c.teacher} – ${c.day} ${c.time}`).join('\n');
+
+    return `🎓 تسجيل جديد - عرض السوبر أكاديمي (حضوري)
+التاريخ: السبت 13 ديسمبر
+رقم المرجع: ${refId}
+الطالب: ${student.name}
+الصف: ${student.grade}
+الهاتف: ${student.phone}
+
+الحصص:
+${list}
+
+المبلغ: ${final} ريال
+للاستفسار: 74120010`;
+  }
+
+  function shareWhatsApp(refId){
+    const txt = buildSummaryText(refId);
+    window.open('https://wa.me/?text=' + encodeURIComponent(txt), '_blank');
+  }
+
+  async function copySummary(refId){
+    const txt = buildSummaryText(refId);
+    try{ await navigator.clipboard.writeText(txt); setMsg('success','تم نسخ الملخص ✅'); }
+    catch(e){ prompt('انسخ الملخص يدويًا:', txt); }
+  }
+
+  function resetAll(){
+    selected = [];
+    uploadedFile = null;
+    student = {};
+    step = 1;
+
+    document.getElementById('studentName').value = '';
+    document.getElementById('grade').value = '';
+    document.getElementById('phone').value = '';
+    document.getElementById('email').value = '';
+    document.getElementById('notes').value = '';
+    document.getElementById('agreeTerms').checked = false;
+
+    document.getElementById('receiptFile').value = '';
+    document.getElementById('filePreview').style.display='none';
+    document.getElementById('beforeSubmit').style.display='block';
+    document.getElementById('resultBox').style.display='none';
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = false;
+    btn.classList.remove('disabled');
+
+    renderClasses();
+    updateSummaryNumbers();
+    showStep(1);
+  }
+
+  function openModal(src, title){
+    const modal = document.getElementById('imgModal');
+    document.getElementById('modalImg').src = src;
+    document.getElementById('modalTitle').textContent = 'صورة: ' + title + ' (اضغط خارج الصورة للإغلاق)';
+    modal.classList.add('show');
+  }
+  function closeModal(e){
+    if(e) e.preventDefault();
+    document.getElementById('imgModal').classList.remove('show');
+  }
+</script>
+</body>
+</html>
